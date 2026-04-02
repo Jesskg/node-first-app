@@ -3,4 +3,29 @@
 
     <body>
         <%- include('../includes/navigation.ejs') %>
+        <main>
+            <% if (products.length > 0) { %>
+                <ul class="product-list">
+                    <% products.forEach(p => { %>
+                        <li class="product-item">
+                            <div class="product-image">
+                                <img src="<%= p.productData.imageUrl %>" alt="<%= p.productData.title %>">
+                            </div>
+                            <div class="product-details">
+                                <h2><%= p.productData.title %></h2>
+                                <p>$<%= p.productData.price %></p>
+                            </div>
+                            <div class="product-actions">
+                                <form action="/cart-delete-item" method="post">
+                                    <input type="hidden" name="productId" value="<%= p.productData.id %>">
+                                    <button class="btn" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <h1>No Products in Cart!</h1>
+            <% } %>
+        </main>
         <%- include('../includes/end.ejs') %>
